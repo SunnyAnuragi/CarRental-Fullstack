@@ -80,7 +80,7 @@ const Cars = () => {
                 transition={{ duration: 0.5, delay: 0.1 }}
                 className='inline-flex items-center gap-1.5 px-4 py-1.5 bg-primary/10 text-primary rounded-full text-xs font-semibold uppercase tracking-wider'
             >
-                🚗 Our Fleet Collection
+                 Our Fleet Collection
             </motion.div>
             <h1 className='text-4xl sm:text-5xl font-extrabold tracking-tight leading-tight'>
                 <span className='bg-gradient-to-r from-gray-900 via-primary to-blue-600 bg-clip-text text-transparent'>
