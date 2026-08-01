@@ -136,7 +136,7 @@ const Hero = () => {
         </div>
       </motion.form>
 
-      <div className='relative w-full max-w-2xl md:max-w-4xl lg:max-w-5xl h-64 sm:h-80 md:h-[380px] lg:h-[440px] flex items-center justify-center overflow-hidden mt-8'>
+      <div className='relative w-full max-w-7xl h-[300px] sm:h-[420px] md:h-[520px] lg:h-[580px] flex items-center justify-center mt-8'>
         <AnimatePresence>
           <motion.img 
             key={carIndex}
@@ -146,7 +146,7 @@ const Hero = () => {
             transition={{ duration: 0.7 }}
             src={carImages[carIndex].src} 
             alt={carImages[carIndex].alt} 
-            className='absolute max-h-full object-contain w-full select-none'
+            className='absolute max-h-full object-contain w-[90%] md:w-[85%] select-none scale-110 sm:scale-120 md:scale-130'
           />
         </AnimatePresence>
       </div>
