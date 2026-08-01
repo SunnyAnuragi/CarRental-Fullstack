@@ -14,10 +14,17 @@ const Cars = () => {
   const pickupLocation = searchParams.get('pickupLocation')
   const pickupDate = searchParams.get('pickupDate')
   const returnDate = searchParams.get('returnDate')
+  const searchParam = searchParams.get('search')
 
   const {cars, axios} = useAppContext()
 
   const [input, setInput] = useState('')
+
+  useEffect(() => {
+    if (searchParam) {
+      setInput(searchParam)
+    }
+  }, [searchParam])
 
   const isSearchData = pickupLocation && pickupDate && returnDate
   const [filteredCars, setFilteredCars] = useState([])

@@ -12,6 +12,14 @@ const Navbar = () => {
     const location = useLocation()
     const [open, setOpen] = useState(false)
     const navigate = useNavigate()
+    const [navSearch, setNavSearch] = useState('')
+
+    const handleNavSearch = (e) => {
+        if (e.key === 'Enter' && navSearch.trim() !== '') {
+            navigate(`/cars?search=${encodeURIComponent(navSearch.trim())}`)
+            setNavSearch('')
+        }
+    }
 
     const changeRole = async ()=>{
         try {
@@ -46,8 +54,25 @@ const Navbar = () => {
             ))}
 
             <div className='hidden lg:flex items-center text-sm gap-2 border border-borderColor px-3 rounded-full max-w-56'>
-                <input type="text" className="py-1.5 w-full bg-transparent outline-none placeholder-gray-500" placeholder="Search cars"/>
-                <img src={assets.search_icon} alt="search" />
+                <input 
+                    type="text" 
+                    value={navSearch}
+                    onChange={(e) => setNavSearch(e.target.value)}
+                    onKeyDown={handleNavSearch}
+                    className="py-1.5 w-full bg-transparent outline-none placeholder-gray-500" 
+                    placeholder="Search cars"
+                />
+                <img 
+                    src={assets.search_icon} 
+                    alt="search" 
+                    className="cursor-pointer"
+                    onClick={() => {
+                        if (navSearch.trim() !== '') {
+                            navigate(`/cars?search=${encodeURIComponent(navSearch.trim())}`)
+                            setNavSearch('')
+                        }
+                    }}
+                />
             </div>
 
             <div className='flex max-sm:flex-col items-start sm:items-center gap-6'>
