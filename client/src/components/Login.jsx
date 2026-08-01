@@ -1,6 +1,7 @@
 import React from 'react'
 import { useAppContext } from '../context/AppContext';
 import toast from 'react-hot-toast';
+import { motion } from 'motion/react';
 
 const Login = () => {
 
@@ -91,9 +92,13 @@ const Login = () => {
                     Create an account? <span onClick={() => setState("register")} className="text-primary cursor-pointer">click here</span>
                 </p>
             )}
-            <button className="bg-primary hover:bg-blue-800 transition-all text-white w-full py-2 rounded-md cursor-pointer">
+            <motion.button 
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="bg-primary hover:bg-blue-800 transition-all text-white w-full py-2 rounded-md cursor-pointer shadow-md hover:shadow-lg font-medium"
+            >
                 {state === "register" ? "Create Account" : "Login"}
-            </button>
+            </motion.button>
             <div className="w-full flex items-center justify-center gap-2 my-1">
                 <span className="h-[1px] bg-gray-200 w-full"></span>
                 <span className="text-xs text-gray-400">or</span>

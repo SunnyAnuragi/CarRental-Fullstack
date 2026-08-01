@@ -4,10 +4,12 @@ import Title from '../components/Title'
 import { useAppContext } from '../context/AppContext'
 import toast from 'react-hot-toast'
 import { motion } from 'motion/react'
+import { useNavigate } from 'react-router-dom'
 
 const MyBookings = () => {
 
   const { axios, user, currency } = useAppContext()
+  const navigate = useNavigate()
 
   const [bookings, setBookings] = useState([])
   const [rating, setRating] = useState(5)
@@ -84,67 +86,88 @@ const MyBookings = () => {
       </div>
 
        <div>
-        {bookings.map((booking, index)=>(
-          <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: index * 0.1, duration: 0.4 }}
-          
-          key={booking._id} className='grid grid-cols-1 md:grid-cols-4 gap-6 p-6 border border-borderColor rounded-lg mt-5 first:mt-12'>
-            {/* Car Image + Info */}
-
-            <div className='md:col-span-1'>
-              <div className='rounded-md overflow-hidden mb-3'>
-                <img src={booking.car.image} alt="" className='w-full h-auto aspect-video object-cover'/>
-              </div>
-              <p className='text-lg font-medium mt-2'>{booking.car.brand} {booking.car.model}</p>
-
-              <p className='text-gray-500'>{booking.car.year} • {booking.car.category} • {booking.car.location}</p>
-            </div>
-
-            {/* Booking Info */}
-            <div className='md:col-span-2'>
-              <div className='flex items-center gap-2'>
-                <p className='px-3 py-1.5 bg-light rounded'>Booking #{index+1}</p>
-                <p className={`px-3 py-1 text-xs rounded-full ${
-                  booking.status === 'confirmed' 
-                    ? 'bg-green-400/15 text-green-600' 
-                    : booking.status === 'pending'
-                    ? 'bg-yellow-400/15 text-yellow-600'
-                    : 'bg-red-400/15 text-red-600'
-                }`}>{booking.status}</p>
-              </div>
-
-              <div className='flex items-start gap-2 mt-3'>
-                <img src={assets.calendar_icon_colored} alt="" className='w-4 h-4 mt-1'/>
-                <div>
-                  <p className='text-gray-500'>Rental Period</p>
-                  <p>{booking.pickupDate.split('T')[0]} To {booking.returnDate.split('T')[0]}</p>
-                </div>
-              </div>
-
-              <div className='flex items-start gap-2 mt-3'>
-                <img src={assets.location_icon_colored} alt="" className='w-4 h-4 mt-1'/>
-                <div>
-                  <p className='text-gray-500'>Pick-up Location</p>
-                  <p>{booking.car.location}</p>
-                </div>
-              </div>
-            </div>
-
-           {/* Price */}
-           <div className='md:col-span-1 flex flex-col justify-between gap-6'>
-              <div className='text-sm text-gray-500 text-right'>
-                <p>Total Price</p>
-                <h1 className='text-2xl font-semibold text-primary'>{currency}{booking.price}</h1>
-                <p>Booked on {booking.createdAt.split('T')[0]}</p>
-              </div>
-           </div>
-
-
+        {bookings.length === 0 ? (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+            className='flex flex-col items-center justify-center text-center p-12 border border-borderColor rounded-xl bg-white/50 backdrop-blur-sm max-w-xl mx-auto shadow-sm mt-12'
+          >
+            <h2 className='text-xl font-bold text-gray-800 mb-2'>No active bookings found</h2>
+            <p className='text-gray-500 font-light text-sm max-w-sm mb-6'>
+              Ready to hit the road? Explore our premium selection of luxury vehicles and reserve yours today.
+            </p>
+            <motion.button
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              onClick={() => navigate('/cars')}
+              className='px-6 py-2.5 bg-primary hover:bg-primary-dull text-white rounded-lg font-medium transition-all cursor-pointer shadow-md hover:shadow-lg'
+            >
+              Browse Available Cars
+            </motion.button>
           </motion.div>
-        ))}
-        </div>
+        ) : (
+          bookings.map((booking, index)=>(
+            <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.1, duration: 0.4 }}
+            
+            key={booking._id} className='grid grid-cols-1 md:grid-cols-4 gap-6 p-6 border border-borderColor rounded-lg mt-5 first:mt-12'>
+              {/* Car Image + Info */}
+
+              <div className='md:col-span-1'>
+                <div className='rounded-md overflow-hidden mb-3'>
+                  <img src={booking.car.image} alt="" className='w-full h-auto aspect-video object-cover'/>
+                </div>
+                <p className='text-lg font-medium mt-2'>{booking.car.brand} {booking.car.model}</p>
+
+                <p className='text-gray-500'>{booking.car.year} • {booking.car.category} • {booking.car.location}</p>
+              </div>
+
+              {/* Booking Info */}
+              <div className='md:col-span-2'>
+                <div className='flex items-center gap-2'>
+                  <p className='px-3 py-1.5 bg-light rounded'>Booking #{index+1}</p>
+                  <p className={`px-3 py-1 text-xs rounded-full ${
+                    booking.status === 'confirmed' 
+                      ? 'bg-green-400/15 text-green-600' 
+                      : booking.status === 'pending'
+                      ? 'bg-yellow-400/15 text-yellow-600'
+                      : 'bg-red-400/15 text-red-600'
+                  }`}>{booking.status}</p>
+                </div>
+
+                <div className='flex items-start gap-2 mt-3'>
+                  <img src={assets.calendar_icon_colored} alt="" className='w-4 h-4 mt-1'/>
+                  <div>
+                    <p className='text-gray-500'>Rental Period</p>
+                    <p>{booking.pickupDate.split('T')[0]} To {booking.returnDate.split('T')[0]}</p>
+                  </div>
+                </div>
+
+                <div className='flex items-start gap-2 mt-3'>
+                  <img src={assets.location_icon_colored} alt="" className='w-4 h-4 mt-1'/>
+                  <div>
+                    <p className='text-gray-500'>Pick-up Location</p>
+                    <p>{booking.car.location}</p>
+                  </div>
+                </div>
+              </div>
+
+             {/* Price */}
+             <div className='md:col-span-1 flex flex-col justify-between gap-6'>
+                <div className='text-sm text-gray-500 text-right'>
+                  <p>Total Price</p>
+                  <h1 className='text-2xl font-semibold text-primary'>{currency}{booking.price}</h1>
+                  <p>Booked on {booking.createdAt.split('T')[0]}</p>
+                </div>
+             </div>
+
+            </motion.div>
+          ))
+        )}
+       </div>
 
        {/* Review Submission Form */}
        {user && (
@@ -186,13 +209,15 @@ const MyBookings = () => {
                />
              </div>
 
-             <button
-               type="submit"
-               disabled={isSubmitting}
-               className='px-6 py-2.5 bg-primary hover:bg-primary-dull text-white rounded-lg font-medium transition-all cursor-pointer disabled:opacity-50'
-             >
-               {isSubmitting ? 'Submitting...' : 'Submit Testimonial'}
-             </button>
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                type="submit"
+                disabled={isSubmitting}
+                className='px-6 py-2.5 bg-primary hover:bg-primary-dull text-white rounded-lg font-medium transition-all cursor-pointer disabled:opacity-50 shadow-sm hover:shadow'
+              >
+                {isSubmitting ? 'Submitting...' : 'Submit Testimonial'}
+              </motion.button>
            </form>
          </div>
        )}

@@ -129,18 +129,24 @@ const CarDetails = () => {
             <hr className='border-borderColor my-6'/>
 
             <div className='flex flex-col gap-2'>
-              <label htmlFor="pickup-date">Pickup Date</label>
+              <label htmlFor="pickup-date" className='text-xs font-semibold text-gray-600 uppercase tracking-wider'>Pickup Date</label>
               <input value={pickupDate} onChange={(e)=>setPickupDate(e.target.value)}
-              type="date" className='border border-borderColor px-3 py-2 rounded-lg' required id='pickup-date' min={new Date().toISOString().split('T')[0]}/>
+              type="date" className='border border-borderColor px-3 py-2 rounded-lg outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all bg-transparent' required id='pickup-date' min={new Date().toISOString().split('T')[0]}/>
             </div>
 
             <div className='flex flex-col gap-2'>
-              <label htmlFor="return-date">Return Date</label>
+              <label htmlFor="return-date" className='text-xs font-semibold text-gray-600 uppercase tracking-wider'>Return Date</label>
               <input value={returnDate} onChange={(e)=>setReturnDate(e.target.value)}
-              type="date" className='border border-borderColor px-3 py-2 rounded-lg' required id='return-date'/>
+              type="date" className='border border-borderColor px-3 py-2 rounded-lg outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all bg-transparent' required id='return-date'/>
             </div>
 
-            <button className='w-full bg-primary hover:bg-primary-dull transition-all py-3 font-medium text-white rounded-xl cursor-pointer'>Book Now</button>
+            <motion.button 
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className='w-full bg-primary hover:bg-primary-dull transition-all py-3 font-medium text-white rounded-xl cursor-pointer shadow-md hover:shadow-lg'
+            >
+              Book Now
+            </motion.button>
 
             <p className='text-center text-sm'>No credit card required to reserve</p>
 
