@@ -115,12 +115,12 @@ const Hero = () => {
       </motion.form>
 
       <motion.img 
-        initial={{ y: 80, opacity: 0 }}
+        initial={{ y: 60, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.6 }}
         src={assets.hero_car1} 
         alt="Premium Luxury Green Hypercar" 
-        className='max-h-[300px] sm:max-h-[420px] md:max-h-[520px] lg:max-h-[580px] w-[90%] md:w-[85%] object-contain select-none scale-110 sm:scale-120 md:scale-130 mt-8'
+        className='max-h-60 sm:max-h-72 md:max-h-80 lg:max-h-[360px] w-auto object-contain select-none mt-6'
       />
     </motion.div>
   )
