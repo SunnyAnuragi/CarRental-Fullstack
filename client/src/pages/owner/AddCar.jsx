@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Title from "../../components/owner/Title";
 import { assets } from "../../assets/assets";
 import { useAppContext } from "../../context/AppContext";
+import { motion } from "motion/react";
 import { cityList } from "../../assets/assets";
 import toast from "react-hot-toast";
 
@@ -62,10 +63,24 @@ const AddCar = () => {
 
   return (
     <div className="px-4 py-10 md:px-10 flex-1">
-      <Title
-        title="Add New Car"
-        subTitle="Fill in details to list a new car for booking, including pricing, availability, and car specifications."
-      />
+      <div className='flex flex-col items-start gap-2.5 text-left mb-6'>
+          <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className='inline-flex items-center px-4 py-1.5 bg-primary/10 text-primary rounded-full text-xs font-semibold uppercase tracking-wider'
+          >
+              Inventory Management
+          </motion.div>
+          <h1 className='text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight'>
+              <span className='bg-gradient-to-r from-gray-900 via-primary to-blue-600 bg-clip-text text-transparent'>
+                  Add New Car
+              </span>
+          </h1>
+          <p className='text-gray-500 text-sm font-light max-w-2xl mt-0.5'>
+              Fill in details to list a new car for booking, including pricing, availability, and car specifications.
+          </p>
+      </div>
 
       <form
         onSubmit={onSubmitHandler}

@@ -45,7 +45,24 @@ const Testimonial = () => {
   return (
     <div className="py-28 px-6 md:px-16 lg:px-24 xl:px-44">
             
-           <Title title="What Our Customers Say" subTitle="Discover why discerning travelers choose StayVenture for their luxury accommodations around the world."/>
+            <div className='flex flex-col items-center gap-3 text-center mb-12'>
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                    className='inline-flex items-center gap-1.5 px-4 py-1.5 bg-primary/10 text-primary rounded-full text-xs font-semibold uppercase tracking-wider'
+                >
+                    Reviews
+                </motion.div>
+                <h1 className='text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight'>
+                    <span className='bg-gradient-to-r from-gray-900 via-primary to-blue-600 bg-clip-text text-transparent'>
+                        What Our Customers Say
+                    </span>
+                </h1>
+                <p className='text-gray-500 text-sm font-light max-w-xl mt-0.5 leading-relaxed'>
+                    Discover why discerning travelers choose StayVenture for their luxury rentals around the world.
+                </p>
+            </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-18">
                 {testimonials.map((testimonial, index) => (

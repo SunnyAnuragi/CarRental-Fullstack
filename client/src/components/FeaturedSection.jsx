@@ -24,13 +24,24 @@ const FeaturedSection = () => {
     transition={{ duration: 1, ease: "easeOut" }}
     className='flex flex-col items-center py-24 px-6 md:px-16 lg:px-24 xl:px-32 w-full'>
 
-        <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.5 }}
-        >
-            <Title title='Featured Vehicles' subTitle='Explore our selection of premium vehicles available for your next adventure.'/>
-        </motion.div>
+        <div className='flex flex-col items-center gap-3 text-center mb-6'>
+            <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className='inline-flex items-center gap-1.5 px-4 py-1.5 bg-primary/10 text-primary rounded-full text-xs font-semibold uppercase tracking-wider'
+            >
+                Featured Fleet
+            </motion.div>
+            <h1 className='text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight'>
+                <span className='bg-gradient-to-r from-gray-900 via-primary to-blue-600 bg-clip-text text-transparent'>
+                    Featured Vehicles
+                </span>
+            </h1>
+            <p className='text-gray-500 text-sm font-light max-w-lg mt-0.5'>
+                Explore our selection of premium vehicles available for your next adventure.
+            </p>
+        </div>
 
         {/* Category Tab Bar (No Emoji) */}
         <div className='flex flex-wrap items-center justify-center gap-2.5 mt-8 mb-4 border-b border-borderColor pb-5 w-full max-w-2xl'>

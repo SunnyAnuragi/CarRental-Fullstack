@@ -3,6 +3,7 @@ import { assets} from '../../assets/assets'
 import Title from '../../components/owner/Title'
 import { useAppContext } from '../../context/AppContext'
 import toast from 'react-hot-toast'
+import { motion } from 'motion/react'
 
 const ManageCars = () => {
 
@@ -63,7 +64,24 @@ const ManageCars = () => {
   return (
     <div className='px-4 pt-10 md:px-10 w-full'>
       
-      <Title title="Manage Cars" subTitle="View all listed cars, update their details, or remove them from the booking platform."/>
+      <div className='flex flex-col items-start gap-2.5 text-left mb-6'>
+          <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className='inline-flex items-center px-4 py-1.5 bg-primary/10 text-primary rounded-full text-xs font-semibold uppercase tracking-wider'
+          >
+              Fleet Catalog
+          </motion.div>
+          <h1 className='text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight'>
+              <span className='bg-gradient-to-r from-gray-900 via-primary to-blue-600 bg-clip-text text-transparent'>
+                  Manage Cars
+              </span>
+          </h1>
+          <p className='text-gray-500 text-sm font-light max-w-2xl mt-0.5'>
+              View all listed cars, update their details, or remove them from the booking platform.
+          </p>
+      </div>
 
       <div className='max-w-3xl w-full rounded-md overflow-hidden border border-borderColor mt-6'>
 
