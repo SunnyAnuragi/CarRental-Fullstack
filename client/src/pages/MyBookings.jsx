@@ -10,6 +10,34 @@ const MyBookings = () => {
   const { axios, user, currency } = useAppContext()
 
   const [bookings, setBookings] = useState([])
+  const [rating, setRating] = useState(5)
+  const [testimonialText, setTestimonialText] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const handleReviewSubmit = async (e) => {
+    e.preventDefault()
+    if (isSubmitting) return
+
+    setIsSubmitting(true)
+    try {
+      const { data } = await axios.post('/api/user/add-testimonial', {
+        rating,
+        testimonial: testimonialText
+      })
+
+      if (data.success) {
+        toast.success(data.message)
+        setTestimonialText('')
+        setRating(5)
+      } else {
+        toast.error(data.message)
+      }
+    } catch (error) {
+      toast.error(error.message)
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
 
   const fetchMyBookings = async ()=>{
     try {
@@ -101,9 +129,60 @@ const MyBookings = () => {
 
           </motion.div>
         ))}
-       </div>
+        </div>
+
+       {/* Review Submission Form */}
+       {user && (
+         <div className='max-w-xl border border-borderColor rounded-lg p-6 mt-12 bg-white shadow-sm'>
+           <h2 className='text-lg font-medium mb-1'>Share Your Experience</h2>
+           <p className='text-gray-500 mb-4 font-light'>Submit a testimonial to let others know about your rental experience.</p>
+           
+           <form onSubmit={handleReviewSubmit} className='space-y-4'>
+             <div className='flex flex-col gap-2'>
+               <label className='font-medium text-gray-700'>Rating</label>
+               <div className='flex gap-1.5'>
+                 {[1, 2, 3, 4, 5].map((star) => (
+                   <button
+                     type="button"
+                     key={star}
+                     onClick={() => setRating(star)}
+                     className='cursor-pointer focus:outline-none transition-transform active:scale-95'
+                   >
+                     <img
+                       src={assets.star_icon}
+                       alt={`${star} Stars`}
+                       className={`h-6 w-6 ${rating >= star ? 'opacity-100 filter-none' : 'opacity-30 grayscale'}`}
+                     />
+                   </button>
+                 ))}
+               </div>
+             </div>
+
+             <div className='flex flex-col gap-2'>
+               <label htmlFor="testimonial-text" className='font-medium text-gray-700'>Your Review</label>
+               <textarea
+                 id="testimonial-text"
+                 rows={4}
+                 required
+                 value={testimonialText}
+                 onChange={(e) => setTestimonialText(e.target.value)}
+                 placeholder="Write your review here... How was the car? How was the service?"
+                 className='border border-borderColor px-3 py-2 rounded-lg outline-none focus:border-primary transition-all text-sm font-light'
+               />
+             </div>
+
+             <button
+               type="submit"
+               disabled={isSubmitting}
+               className='px-6 py-2.5 bg-primary hover:bg-primary-dull text-white rounded-lg font-medium transition-all cursor-pointer disabled:opacity-50'
+             >
+               {isSubmitting ? 'Submitting...' : 'Submit Testimonial'}
+             </button>
+           </form>
+         </div>
+       )}
       
-    </motion.div>
+     </motion.div>
   )
 }
 

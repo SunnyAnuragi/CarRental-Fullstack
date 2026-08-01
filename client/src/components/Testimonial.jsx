@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Title from './Title'
 import { assets } from '../assets/assets';
 import { motion } from 'motion/react';
+import { useAppContext } from '../context/AppContext';
 
 const Testimonial = () => {
+    const { axios } = useAppContext();
 
-    const testimonials = [
+    const dummyTestimonials = [
         { name: "Emma Rodriguez", 
           location: "Barcelona, Spain", 
           image: assets.testimonial_image_1, 
@@ -23,6 +25,23 @@ const Testimonial = () => {
         }
     ];
 
+    const [testimonials, setTestimonials] = useState(dummyTestimonials);
+
+    const fetchTestimonials = async () => {
+        try {
+            const { data } = await axios.get('/api/user/testimonials');
+            if (data.success && data.testimonials && data.testimonials.length > 0) {
+                setTestimonials(data.testimonials);
+            }
+        } catch (error) {
+            console.error(error.message);
+        }
+    };
+
+    useEffect(() => {
+        fetchTestimonials();
+    }, []);
+
   return (
     <div className="py-28 px-6 md:px-16 lg:px-24 xl:px-44">
             
@@ -39,7 +58,7 @@ const Testimonial = () => {
                     key={index} className="bg-white p-6 rounded-xl shadow-lg hover:-translate-y-1 transition-all duration-500">
 
                         <div className="flex items-center gap-3">
-                            <img className="w-12 h-12 rounded-full" src={testimonial.image} alt={testimonial.name} />
+                            <img className="w-12 h-12 rounded-full object-cover" src={testimonial.image || assets.user_profile || "https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=300"} alt={testimonial.name} />
                             <div>
                                 <p className="text-xl">{testimonial.name}</p>
                                 <p className="text-gray-500">{testimonial.location}</p>
