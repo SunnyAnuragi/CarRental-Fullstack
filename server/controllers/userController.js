@@ -74,3 +74,45 @@ export const getCars = async (req, res) => {
     res.json({ success: false, message: error.message });
   }
 };
+
+// Google Login Controller
+export const googleLogin = async (req, res) => {
+  try {
+    const { token } = req.body;
+    if (!token) {
+      return res.json({ success: false, message: "Google token is missing" });
+    }
+
+    // Verify token with Google API
+    const response = await fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${token}`);
+    const decoded = await response.json();
+
+    if (!decoded || decoded.error || decoded.aud !== process.env.GOOGLE_CLIENT_ID) {
+      return res.json({ success: false, message: "Invalid Google token" });
+    }
+
+    const { email, name, picture } = decoded;
+
+    // Check if user already exists
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      // Create user if not exists (with a random dummy password, since they login via Google)
+      const hashedPassword = await bcrypt.hash(Math.random().toString(36).slice(-16), 10);
+      user = await User.create({
+        name,
+        email,
+        password: hashedPassword,
+        image: picture || "",
+      });
+    }
+
+    // Generate JWT token
+    const jwtToken = generateToken(user._id.toString());
+
+    res.json({ success: true, token: jwtToken });
+  } catch (error) {
+    console.log(error.message);
+    res.json({ success: false, message: error.message });
+  }
+};

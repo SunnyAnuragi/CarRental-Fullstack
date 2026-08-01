@@ -11,6 +11,36 @@ const Login = () => {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
 
+    const handleGoogleCallback = async (response) => {
+        try {
+            const { data } = await axios.post('/api/user/google-login', { token: response.credential });
+            if (data.success) {
+                navigate('/');
+                setToken(data.token);
+                localStorage.setItem('token', data.token);
+                setShowLogin(false);
+            } else {
+                toast.error(data.message);
+            }
+        } catch (error) {
+            toast.error(error.message);
+        }
+    };
+
+    React.useEffect(() => {
+        /* global google */
+        if (window.google) {
+            google.accounts.id.initialize({
+                client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+                callback: handleGoogleCallback
+            });
+            google.accounts.id.renderButton(
+                document.getElementById("google-signin-btn"),
+                { theme: "outline", size: "large", width: 288 }
+            );
+        }
+    }, [state]);
+
     const onSubmitHandler = async (event)=>{
         try {
             event.preventDefault();
@@ -64,6 +94,12 @@ const Login = () => {
             <button className="bg-primary hover:bg-blue-800 transition-all text-white w-full py-2 rounded-md cursor-pointer">
                 {state === "register" ? "Create Account" : "Login"}
             </button>
+            <div className="w-full flex items-center justify-center gap-2 my-1">
+                <span className="h-[1px] bg-gray-200 w-full"></span>
+                <span className="text-xs text-gray-400">or</span>
+                <span className="h-[1px] bg-gray-200 w-full"></span>
+            </div>
+            <div id="google-signin-btn" className="w-full flex justify-center"></div>
         </form>
     </div>
   )
