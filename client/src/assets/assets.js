@@ -40,6 +40,10 @@ import car_image1 from "./car_image1.png";
 import car_image2 from "./car_image2.png";
 import car_image3 from "./car_image3.png";
 import car_image4 from "./car_image4.png";
+import hero_car1 from "./hero_car1.png";
+import hero_car2 from "./hero_car2.png";
+import hero_car3 from "./hero_car3.png";
+import hero_car4 from "./hero_car4.png";
 
 export const cityList = [
   "Delhi",
@@ -97,6 +101,10 @@ export const assets = {
   car_image2,
   car_image3,
   car_image4,
+  hero_car1,
+  hero_car2,
+  hero_car3,
+  hero_car4,
 };
 
 export const menuLinks = [

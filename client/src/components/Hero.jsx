@@ -1,13 +1,34 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { assets, cityList } from '../assets/assets'
 import { useAppContext } from '../context/AppContext'
-import {motion} from 'motion/react'
+import { motion, AnimatePresence } from 'motion/react'
 
 const Hero = () => {
 
     const [pickupLocation, setPickupLocation] = useState('')
-
     const {pickupDate, setPickupDate, returnDate, setReturnDate, navigate} = useAppContext()
+
+    const carImages = [
+      { src: assets.hero_car1, alt: "Luxury Green Hypercar" },
+      { src: assets.hero_car2, alt: "Sleek Grey Sports Coupe" },
+      { src: assets.hero_car3, alt: "Vibrant Orange Supercar" },
+      { src: assets.hero_car4, alt: "Premium Silver SUV" }
+    ]
+    const [carIndex, setCarIndex] = useState(0)
+
+    useEffect(() => {
+      const timer = setInterval(() => {
+        setCarIndex((prev) => (prev + 1) % carImages.length)
+      }, 7000)
+      return () => clearInterval(timer)
+    }, [])
+
+    useEffect(() => {
+      carImages.slice(1).forEach((imgObj) => {
+        const img = new Image()
+        img.src = imgObj.src
+      })
+    }, [])
 
     const handleSearch = (e)=>{
         e.preventDefault()
@@ -115,11 +136,20 @@ const Hero = () => {
         </div>
       </motion.form>
 
-      <motion.img 
-        initial={{ y: 100, opacity: 0 }}
-       animate={{ y: 0, opacity: 1 }}
-       transition={{ duration: 0.8, delay: 0.6 }}
-      src={assets.main_car} alt="car" className='max-h-74'/>
+      <div className='relative w-full max-w-xl lg:max-w-2xl h-56 sm:h-72 md:h-80 flex items-center justify-center overflow-hidden mt-6'>
+        <AnimatePresence>
+          <motion.img 
+            key={carIndex}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.7 }}
+            src={carImages[carIndex].src} 
+            alt={carImages[carIndex].alt} 
+            className='absolute max-h-full object-contain w-full select-none'
+          />
+        </AnimatePresence>
+      </div>
     </motion.div>
   )
 }
