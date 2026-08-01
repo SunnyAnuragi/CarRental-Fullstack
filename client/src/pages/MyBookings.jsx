@@ -64,9 +64,24 @@ const MyBookings = () => {
     
     className='px-6 md:px-16 lg:px-24 xl:px-32 2xl:px-48 mt-16 text-sm max-w-7xl'>
 
-      <Title title='My Bookings'
-       subTitle='View and manage your all car bookings'
-       align="left"/>
+      <div className='flex flex-col items-start gap-2.5 text-left mb-6'>
+          <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className='inline-flex items-center px-4 py-1.5 bg-primary/10 text-primary rounded-full text-xs font-semibold uppercase tracking-wider'
+          >
+              Customer Portal
+          </motion.div>
+          <h1 className='text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight'>
+              <span className='bg-gradient-to-r from-gray-900 via-primary to-blue-600 bg-clip-text text-transparent'>
+                  My Bookings
+              </span>
+          </h1>
+          <p className='text-gray-500 text-sm font-light max-w-lg mt-0.5'>
+              View and manage all your car bookings
+          </p>
+      </div>
 
        <div>
         {bookings.map((booking, index)=>(

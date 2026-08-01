@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { assets, dummyDashboardData } from '../../assets/assets'
 import Title from '../../components/owner/Title'
 import { useAppContext } from '../../context/AppContext'
+import { motion } from 'motion/react'
 import toast from 'react-hot-toast'
 
 const Dashboard = () => {
@@ -45,7 +46,24 @@ const Dashboard = () => {
 
   return (
     <div className='px-4 pt-10 md:px-10 flex-1'>
-      <Title title="Admin Dashboard" subTitle="Monitor overall platform performance including total cars, bookings, revenue, and recent activities"/>
+      <div className='flex flex-col items-start gap-2.5 text-left mb-6'>
+          <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className='inline-flex items-center px-4 py-1.5 bg-primary/10 text-primary rounded-full text-xs font-semibold uppercase tracking-wider'
+          >
+              Overview Console
+          </motion.div>
+          <h1 className='text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight'>
+              <span className='bg-gradient-to-r from-gray-900 via-primary to-blue-600 bg-clip-text text-transparent'>
+                  Admin Dashboard
+              </span>
+          </h1>
+          <p className='text-gray-500 text-sm font-light max-w-2xl mt-0.5'>
+              Monitor overall platform performance including total cars, bookings, revenue, and recent activities
+          </p>
+      </div>
 
       <div className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 my-8 max-w-3xl'>
         {dashboardCards.map((card, index)=>(
