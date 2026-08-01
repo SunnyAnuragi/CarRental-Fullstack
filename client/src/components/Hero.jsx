@@ -21,10 +21,27 @@ const Hero = () => {
     transition={{ duration: 0.8 }}
     className='h-screen flex flex-col items-center justify-center gap-14 bg-light text-center'>
 
-        <motion.h1 initial={{ y: 50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-        className='text-4xl md:text-5xl font-semibold'>Luxury cars on Rent</motion.h1>
+        <div className='flex flex-col items-center gap-3'>
+            <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className='inline-flex items-center gap-1.5 px-4 py-1.5 bg-primary/10 text-primary rounded-full text-xs font-semibold uppercase tracking-wider'
+            >
+                ✨ Premium Car Rental Service
+            </motion.div>
+            <motion.h1 
+                initial={{ y: 30, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className='text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight'
+            >
+                <span className='bg-gradient-to-r from-gray-900 via-primary to-blue-600 bg-clip-text text-transparent'>
+                    Luxury Cars
+                </span>{' '}
+                <span className='text-gray-800 font-light'>on Rent</span>
+            </motion.h1>
+        </div>
       
       <motion.form
       initial={{ scale: 0.95, opacity: 0, y: 50 }}
