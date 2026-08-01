@@ -28,7 +28,7 @@ const Hero = () => {
                 transition={{ duration: 0.5, delay: 0.1 }}
                 className='inline-flex items-center gap-1.5 px-4 py-1.5 bg-primary/10 text-primary rounded-full text-xs font-semibold uppercase tracking-wider'
             >
-                ✨ Premium Car Rental Service
+                 Premium Car Rental Service
             </motion.div>
             <motion.h1 
                 initial={{ y: 30, opacity: 0 }}
