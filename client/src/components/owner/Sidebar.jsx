@@ -49,10 +49,18 @@ const Sidebar = () => {
       
       <div className='w-full'>
         {ownerMenuLinks.map((link, index)=>(
-            <NavLink key={index} to={link.path} className={`relative flex items-center gap-2 w-full py-3 pl-4 first:mt-6 ${link.path === location.pathname ? 'bg-primary/10 text-primary' : 'text-gray-600'}`}>
+            <NavLink 
+              key={index} 
+              to={link.path} 
+              className={`relative flex items-center gap-2 w-full py-3 pl-4 hover:pl-5 first:mt-6 transition-all duration-300 hover:text-primary ${
+                link.path === location.pathname 
+                  ? 'bg-primary/5 text-primary font-medium' 
+                  : 'text-gray-600'
+              }`}
+            >
                 <img src={link.path === location.pathname ? link.coloredIcon : link.icon} alt="car icon" />
                 <span className='max-md:hidden'>{link.name}</span>
-                <div className={`${link.path === location.pathname && 'bg-primary'} w-1.5 h-8 rounded-l right-0 absolute`}></div>
+                <div className={`${link.path === location.pathname ? 'bg-primary scale-y-100 opacity-100' : 'scale-y-0 opacity-0'} w-1 h-8 rounded-r left-0 absolute transition-all duration-300`}></div>
             </NavLink>
         ))}
       </div>

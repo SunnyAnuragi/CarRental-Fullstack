@@ -63,39 +63,55 @@ const Login = () => {
     }
 
   return (
-    <div onClick={()=> setShowLogin(false)} className='fixed top-0 bottom-0 left-0 right-0 z-100 flex items-center text-sm text-gray-600 bg-black/50'>
+    <div onClick={()=> setShowLogin(false)} className='fixed top-0 bottom-0 left-0 right-0 z-100 flex items-center text-sm text-gray-600 bg-black/60 backdrop-blur-md'>
 
-      <form onSubmit={onSubmitHandler} onClick={(e)=>e.stopPropagation()} className="flex flex-col gap-4 m-auto items-start p-8 py-12 w-80 sm:w-[352px] rounded-lg shadow-xl border border-gray-200 bg-white">
+      <motion.form 
+          initial={{ scale: 0.9, opacity: 0, y: -20 }}
+          animate={{ scale: 1, opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, ease: 'easeOut' }}
+          onSubmit={onSubmitHandler} 
+          onClick={(e)=>e.stopPropagation()} 
+          className="flex flex-col gap-4 m-auto items-start p-8 py-12 w-80 sm:w-[352px] rounded-2xl shadow-2xl border border-borderColor bg-white"
+      >
             <p className="text-2xl font-medium m-auto">
                 <span className="text-primary">User</span> {state === "login" ? "Login" : "Sign Up"}
             </p>
             {state === "register" && (
                 <div className="w-full">
-                    <p>Name</p>
-                    <input onChange={(e) => setName(e.target.value)} value={name} placeholder="type here" className="border border-gray-200 rounded w-full p-2 mt-1 outline-primary" type="text" required />
+                    <label htmlFor="reg-name" className='text-xs font-semibold text-gray-600 uppercase tracking-wider block mb-1.5'>Name</label>
+                    <div className='flex items-center gap-2 border border-gray-200 rounded-lg px-3 py-2 bg-transparent focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all'>
+                      <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                      <input id="reg-name" onChange={(e) => setName(e.target.value)} value={name} placeholder="Your name" className="w-full bg-transparent outline-none text-sm text-gray-600 placeholder-gray-400" type="text" required />
+                    </div>
                 </div>
             )}
-            <div className="w-full ">
-                <p>Email</p>
-                <input onChange={(e) => setEmail(e.target.value)} value={email} placeholder="type here" className="border border-gray-200 rounded w-full p-2 mt-1 outline-primary" type="email" required />
+            <div className="w-full">
+                <label htmlFor="login-email" className='text-xs font-semibold text-gray-600 uppercase tracking-wider block mb-1.5'>Email</label>
+                <div className='flex items-center gap-2 border border-gray-200 rounded-lg px-3 py-2 bg-transparent focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all'>
+                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                  <input id="login-email" onChange={(e) => setEmail(e.target.value)} value={email} placeholder="name@email.com" className="w-full bg-transparent outline-none text-sm text-gray-600 placeholder-gray-400" type="email" required />
+                </div>
             </div>
-            <div className="w-full ">
-                <p>Password</p>
-                <input onChange={(e) => setPassword(e.target.value)} value={password} placeholder="type here" className="border border-gray-200 rounded w-full p-2 mt-1 outline-primary" type="password" required />
+            <div className="w-full">
+                <label htmlFor="login-password" className='text-xs font-semibold text-gray-600 uppercase tracking-wider block mb-1.5'>Password</label>
+                <div className='flex items-center gap-2 border border-gray-200 rounded-lg px-3 py-2 bg-transparent focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all'>
+                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                  <input id="login-password" onChange={(e) => setPassword(e.target.value)} value={password} placeholder="••••••••" className="w-full bg-transparent outline-none text-sm text-gray-600 placeholder-gray-400" type="password" required />
+                </div>
             </div>
             {state === "register" ? (
                 <p>
-                    Already have account? <span onClick={() => setState("login")} className="text-primary cursor-pointer">click here</span>
+                    Already have account? <span onClick={() => setState("login")} className="text-primary cursor-pointer font-medium hover:underline">click here</span>
                 </p>
             ) : (
                 <p>
-                    Create an account? <span onClick={() => setState("register")} className="text-primary cursor-pointer">click here</span>
+                    Create an account? <span onClick={() => setState("register")} className="text-primary cursor-pointer font-medium hover:underline">click here</span>
                 </p>
             )}
             <motion.button 
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="bg-primary hover:bg-blue-800 transition-all text-white w-full py-2 rounded-md cursor-pointer shadow-md hover:shadow-lg font-medium"
+                className="bg-primary hover:bg-blue-800 transition-all text-white w-full py-2.5 rounded-xl cursor-pointer shadow-md hover:shadow-lg font-medium"
             >
                 {state === "register" ? "Create Account" : "Login"}
             </motion.button>
@@ -105,7 +121,7 @@ const Login = () => {
                 <span className="h-[1px] bg-gray-200 w-full"></span>
             </div>
             <div id="google-signin-btn" className="w-full flex justify-center"></div>
-        </form>
+        </motion.form>
     </div>
   )
 }

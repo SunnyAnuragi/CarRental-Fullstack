@@ -48,33 +48,71 @@ const Hero = () => {
       animate={{ scale: 1, opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.4 }}
 
-       onSubmit={handleSearch} className='flex flex-col md:flex-row items-start md:items-center justify-between p-6 rounded-lg md:rounded-full w-full max-w-80 md:max-w-220 bg-white/70 backdrop-blur-md border border-white/50 shadow-[0_12px_40px_rgba(0,0,0,0.08)]'>
+       onSubmit={handleSearch} 
+       className='flex flex-col md:flex-row items-stretch justify-between p-2 md:p-3 rounded-2xl md:rounded-full w-full max-w-80 md:max-w-240 bg-white/80 backdrop-blur-lg border border-white/50 shadow-[0_20px_50px_rgba(0,0,0,0.06)]'
+      >
 
-        <div className='flex flex-col md:flex-row items-start md:items-center gap-10 min-md:ml-8'>
-            <div className='flex flex-col items-start gap-2'>
-                <select required value={pickupLocation} onChange={(e)=>setPickupLocation(e.target.value)} className='px-2 py-1.5 border border-borderColor rounded-lg outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all bg-transparent text-gray-700 text-sm'>
-                    <option value="">Pickup Location</option>
+        <div className='flex flex-col md:flex-row flex-1 items-stretch text-left'>
+            {/* Location Sector */}
+            <div className='flex flex-col justify-center px-6 py-3 rounded-full hover:bg-gray-100/40 transition-all flex-1 cursor-pointer group'>
+                <label className='text-xs font-bold text-gray-700 uppercase tracking-wider block mb-1'>Location</label>
+                <select 
+                  required 
+                  value={pickupLocation} 
+                  onChange={(e)=>setPickupLocation(e.target.value)} 
+                  className='w-full border-none bg-transparent outline-none text-gray-500 text-sm font-light appearance-none cursor-pointer focus:text-primary transition-colors'
+                >
+                    <option value="">Select location</option>
                     {cityList.map((city)=> <option key={city} value={city}>{city}</option>)}
                 </select>
-                <p className='px-1 text-xs text-gray-500 font-light'>{pickupLocation ? pickupLocation : 'Please select location'}</p>
             </div>
-            <div className='flex flex-col items-start gap-2'>
-                <label htmlFor='pickup-date' className='text-xs font-semibold text-gray-600 uppercase tracking-wider'>Pick-up Date</label>
-                <input value={pickupDate} onChange={e=>setPickupDate(e.target.value)} type="date" id="pickup-date" min={new Date().toISOString().split('T')[0]} className='text-sm text-gray-500 px-2 py-1.5 border border-borderColor rounded-lg outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all bg-transparent' required/>
+
+            {/* Divider */}
+            <div className='hidden md:block w-[1px] bg-borderColor my-3'></div>
+
+            {/* Pick-up Date Sector */}
+            <div className='flex flex-col justify-center px-6 py-3 rounded-full hover:bg-gray-100/40 transition-all flex-1 cursor-pointer group'>
+                <label htmlFor='pickup-date' className='text-xs font-bold text-gray-700 uppercase tracking-wider block mb-1'>Pick-up Date</label>
+                <input 
+                  value={pickupDate} 
+                  onChange={e=>setPickupDate(e.target.value)} 
+                  type="date" 
+                  id="pickup-date" 
+                  min={new Date().toISOString().split('T')[0]} 
+                  className='w-full border-none bg-transparent outline-none text-gray-500 text-sm font-light cursor-pointer focus:text-primary transition-colors' 
+                  required
+                />
             </div>
-            <div className='flex flex-col items-start gap-2'>
-                <label htmlFor='return-date' className='text-xs font-semibold text-gray-600 uppercase tracking-wider'>Return Date</label>
-                <input value={returnDate} onChange={e=>setReturnDate(e.target.value)} type="date" id="return-date" className='text-sm text-gray-500 px-2 py-1.5 border border-borderColor rounded-lg outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all bg-transparent' required/>
+
+            {/* Divider */}
+            <div className='hidden md:block w-[1px] bg-borderColor my-3'></div>
+
+            {/* Return Date Sector */}
+            <div className='flex flex-col justify-center px-6 py-3 rounded-full hover:bg-gray-100/40 transition-all flex-1 cursor-pointer group'>
+                <label htmlFor='return-date' className='text-xs font-bold text-gray-700 uppercase tracking-wider block mb-1'>Return Date</label>
+                <input 
+                  value={returnDate} 
+                  onChange={e=>setReturnDate(e.target.value)} 
+                  type="date" 
+                  id="return-date" 
+                  className='w-full border-none bg-transparent outline-none text-gray-500 text-sm font-light cursor-pointer focus:text-primary transition-colors' 
+                  required
+                />
             </div>
-            
         </div>
+
+        {/* Search Action Button */}
+        <div className='flex items-center justify-end p-2'>
             <motion.button 
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-            className='flex items-center justify-center gap-1 px-9 py-3 max-sm:mt-4 bg-primary hover:bg-primary-dull text-white rounded-full cursor-pointer transition-all shadow-md hover:shadow-lg'>
-                <img src={assets.search_icon} alt="search" className='brightness-300'/>
-                Search
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              type="submit"
+              className='flex items-center justify-center gap-2 px-9 py-4 w-full md:w-auto bg-primary hover:bg-primary-dull text-white rounded-full cursor-pointer transition-all shadow-md hover:shadow-lg font-medium'
+            >
+                <img src={assets.search_icon} alt="search" className='brightness-300 w-4 h-4'/>
+                Search Cars
             </motion.button>
+        </div>
       </motion.form>
 
       <motion.img 

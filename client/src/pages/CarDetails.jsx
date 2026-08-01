@@ -14,6 +14,7 @@ const CarDetails = () => {
 
   const navigate = useNavigate()
   const [car, setCar] = useState(null)
+  const [selectedThumb, setSelectedThumb] = useState(0)
   const currency = import.meta.env.VITE_CURRENCY
 
   const handleSubmit = async (e)=>{
@@ -56,12 +57,41 @@ const CarDetails = () => {
           transition={{ duration: 0.6 }}
 
           className='lg:col-span-2'>
-              <motion.img 
-              initial={{ scale: 0.98, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.5 }}
+              <div className='overflow-hidden rounded-xl mb-4 shadow-md bg-white border border-borderColor/40'>
+                <motion.img 
+                initial={{ scale: 0.98, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                src={car.image} 
+                alt="Car Image" 
+                className={`w-full h-auto md:max-h-100 object-cover transition-all duration-700 ${
+                  selectedThumb === 1 ? 'scale-115 origin-center hue-rotate-15' : selectedThumb === 2 ? 'scale-125 origin-bottom brightness-90' : ''
+                }`}
+                />
+              </div>
 
-              src={car.image} alt="" className='w-full h-auto md:max-h-100 object-cover rounded-xl mb-6 shadow-md'/>
+              {/* Thumbnail Gallery (No Emoji) */}
+              <div className='flex gap-3 mb-6'>
+                {[
+                  { id: 0, name: 'Exterior', style: 'object-cover' },
+                  { id: 1, name: 'Detail Profile', style: 'object-cover scale-115 origin-center hue-rotate-15' },
+                  { id: 2, name: 'Cabin View', style: 'object-cover scale-125 origin-bottom brightness-90' }
+                ].map((thumb) => (
+                  <motion.div
+                    key={thumb.id}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => setSelectedThumb(thumb.id)}
+                    className={`h-16 w-24 rounded-lg overflow-hidden border-2 cursor-pointer transition-all ${
+                      selectedThumb === thumb.id
+                        ? 'border-primary shadow bg-white'
+                        : 'border-borderColor opacity-70 hover:opacity-100 bg-gray-50'
+                    }`}
+                  >
+                    <img src={car.image} alt={thumb.name} className={`w-full h-full ${thumb.style}`} />
+                  </motion.div>
+                ))}
+              </div>
               <motion.div className='space-y-6'
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
