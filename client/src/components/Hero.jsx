@@ -136,7 +136,7 @@ const Hero = () => {
         </div>
       </motion.form>
 
-      <div className='relative w-full max-w-xl lg:max-w-2xl h-56 sm:h-72 md:h-80 flex items-center justify-center overflow-hidden mt-6'>
+      <div className='relative w-full max-w-2xl md:max-w-4xl lg:max-w-5xl h-64 sm:h-80 md:h-[380px] lg:h-[440px] flex items-center justify-center overflow-hidden mt-8'>
         <AnimatePresence>
           <motion.img 
             key={carIndex}
