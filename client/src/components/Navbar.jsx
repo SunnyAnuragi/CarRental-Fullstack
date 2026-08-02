@@ -48,7 +48,7 @@ const Navbar = () => {
 
         <div className={`max-sm:fixed max-sm:h-screen max-sm:w-full max-sm:top-16 max-sm:border-t border-borderColor right-0 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8 max-sm:p-4 transition-all duration-300 z-50 ${location.pathname === "/" ? "bg-light" : "bg-white"} ${open ? "max-sm:translate-x-0" : "max-sm:translate-x-full"}`}>
             {menuLinks.map((link, index)=> (
-                <Link key={index} to={link.path}>
+                <Link key={index} to={link.path} onClick={() => setOpen(false)}>
                     {link.name}
                 </Link>
             ))}
@@ -70,6 +70,7 @@ const Navbar = () => {
                         if (navSearch.trim() !== '') {
                             navigate(`/cars?search=${encodeURIComponent(navSearch.trim())}`)
                             setNavSearch('')
+                            setOpen(false)
                         }
                     }}
                 />
@@ -81,6 +82,7 @@ const Navbar = () => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={()=> {
+                        setOpen(false)
                         if (!user) {
                             setShowLogin(true)
                         } else {
@@ -95,7 +97,10 @@ const Navbar = () => {
                 <motion.button 
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.97 }}
-                    onClick={()=> {user ? logout() : setShowLogin(true)}} 
+                    onClick={()=> {
+                        setOpen(false)
+                        user ? logout() : setShowLogin(true)
+                    }} 
                     className="cursor-pointer px-8 py-2 bg-primary hover:bg-primary-dull transition-all text-white rounded-lg font-medium shadow-sm hover:shadow"
                 >
                     {user ? 'Logout' : 'Login'}
