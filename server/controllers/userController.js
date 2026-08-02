@@ -2,6 +2,10 @@ import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import Car from "../models/Car.js";
+import { OAuth2Client } from 'google-auth-library';
+
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
 
 // Generate JWT Token
 const generateToken = (userId) => {
@@ -79,28 +83,32 @@ export const getCars = async (req, res) => {
 export const googleLogin = async (req, res) => {
   try {
     const { token } = req.body;
+    
     if (!token) {
       return res.json({ success: false, message: "Google token is missing" });
     }
 
-    // Verify token with Google API
-    const response = await fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${token}`);
-    const decoded = await response.json();
+    // Verify token with Google's official library
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
 
-    if (!decoded || decoded.error || decoded.aud !== process.env.GOOGLE_CLIENT_ID) {
-      return res.json({ success: false, message: "Invalid Google token" });
+    const payload = ticket.getPayload();
+    const { email, name, picture } = payload;
+
+    if (!email) {
+      return res.json({ success: false, message: "Could not retrieve email from Google" });
     }
-
-    const { email, name, picture } = decoded;
 
     // Check if user already exists
     let user = await User.findOne({ email });
 
     if (!user) {
-      // Create user if not exists (with a random dummy password, since they login via Google)
+      // Create user if not exists
       const hashedPassword = await bcrypt.hash(Math.random().toString(36).slice(-16), 10);
       user = await User.create({
-        name,
+        name: name || email.split('@')[0],
         email,
         password: hashedPassword,
         image: picture || "",
@@ -112,7 +120,7 @@ export const googleLogin = async (req, res) => {
 
     res.json({ success: true, token: jwtToken });
   } catch (error) {
-    console.log(error.message);
-    res.json({ success: false, message: error.message });
+    console.log("Google login error:", error.message);
+    res.json({ success: false, message: "Google authentication failed" });
   }
 };
